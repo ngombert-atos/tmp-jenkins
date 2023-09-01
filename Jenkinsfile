@@ -54,7 +54,7 @@ pipeline {
         stage('run !') {
             steps {
                 echo "run docker image ..."
-                sh "docker run -d -p 4380:4380 \$APP_NAME"
+                sh "docker run -d -p 4380:4380 \$APP_NAME:\$BRANCH_NAME-\$BUILD_NUMBER"
             }
         }
     }
