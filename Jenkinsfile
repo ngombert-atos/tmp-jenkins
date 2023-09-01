@@ -18,11 +18,13 @@ pipeline {
         }
         stage('clear docker containers') {
             steps {
-                CONTAINERS = sh (
-                    script: 'docker ps -a -q --filter ancestor=\$APP_NAME',
-                    returnStdout: true
-                ).trim()
-                
+                script {
+                    CONTAINERS = sh (
+                        script: 'docker ps -a -q --filter ancestor=\$APP_NAME',
+                        returnStdout: true
+                    ).trim()
+                }
+
                 sh "docker stop $CONTAINERS"
                 sh "docker rm $CONTAINERS"
             }
