@@ -15,9 +15,13 @@ pipeline {
         }
         stage('clear docker containers') {
             steps {
-                containers = sh "docker ps -a -q --filter ancestor=mon_image_en_dur"
-                sh "docker stop $containers"
-                sh "docker rm $containers"
+                CONTAINERS = sh (
+                    script: 'docker ps -a -q --filter ancestor=mon_image_en_dur',
+                    returnStdout: true
+                ).trim()
+                
+                sh "docker stop $CONTAINERS"
+                sh "docker rm $CONTAINERS"
             }
         }
         stage('run !') {
