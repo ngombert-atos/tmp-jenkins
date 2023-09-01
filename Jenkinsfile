@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'worker' }
+    agent { label 'with_docker' }
 
     environment {
         APP_NAME = 'mon_appli'
