@@ -17,6 +17,11 @@ pipeline {
             }
         }
         stage('clear docker containers') {
+            when {
+              expression {
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+              }
+            }
             steps {
                 script {
                     CONTAINERS = sh (
@@ -27,6 +32,7 @@ pipeline {
 
                 sh "docker stop $CONTAINERS"
                 sh "docker rm $CONTAINERS"
+                sh "docker rmi $\APP_NAME"
             }
         }
         stage('run !') {
