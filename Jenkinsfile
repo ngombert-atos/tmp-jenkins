@@ -27,7 +27,7 @@ pipeline {
         stage('run !') {
             steps {
                 echo "run docker image ..."
-                sh "docker run -d mon_image_en_dur"
+                sh "docker run -d -p 4380:4380 mon_image_en_dur"
             }
         }
     }
