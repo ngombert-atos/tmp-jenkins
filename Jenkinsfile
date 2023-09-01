@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         APP_NAME = 'mon_appli'
         CONTAINERS = sh (
@@ -7,9 +8,7 @@ pipeline {
             returnStdout: true
         ).trim()
     }
-
-
-    }
+    
     stages {
         stage('init') {
             steps {
@@ -25,7 +24,7 @@ pipeline {
         }
         stage('clear docker containers') {
             when {
-                allOf{
+                allOf {
                     expression {
                         currentBuild.result == null || currentBuild.result == 'SUCCESS' 
                     }
