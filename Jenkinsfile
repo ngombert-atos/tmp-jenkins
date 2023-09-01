@@ -32,7 +32,7 @@ pipeline {
 
                 sh "docker stop $CONTAINERS"
                 sh "docker rm $CONTAINERS"
-                sh "docker rmi $\APP_NAME"
+                sh "docker rmi \$APP_NAME"
             }
         }
         stage('run !') {
