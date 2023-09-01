@@ -34,7 +34,7 @@ pipeline {
                         currentBuild.result == null || currentBuild.result == 'SUCCESS' 
                     }
                     expression {
-                        CONTAINERS != null
+                        env.CONTAINERS != null
                     }
                 }
             }
