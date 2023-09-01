@@ -4,7 +4,7 @@ pipeline {
     environment {
         APP_NAME = 'mon_appli'
         CONTAINERS = sh (
-            script: 'docker ps -a -q --filter ancestor=\$APP_NAME',
+            script: 'docker ps -a -q --filter ancestor=mon_appli',
             returnStdout: true
         ).trim()
     }
