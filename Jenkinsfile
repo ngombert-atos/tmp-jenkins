@@ -46,7 +46,9 @@ pipeline {
         }
         stage('clear old images') {
             steps {
-                sh "docker rmi $APP_NAME"
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "docker rmi $APP_NAME"
+                }
             }
         }
         stage('run !') {
