@@ -2,6 +2,13 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'mon_appli'
+        CONTAINERS = sh (
+            script: 'docker ps -a -q --filter ancestor=\$APP_NAME',
+            returnStdout: true
+        ).trim()
+    }
+
+
     }
     stages {
         stage('init') {
@@ -18,21 +25,24 @@ pipeline {
         }
         stage('clear docker containers') {
             when {
-              expression {
-                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
-              }
+                allOf{
+                    expression {
+                        currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+                    }
+                    expression {
+                        $CONTAINERS != null
+                    }
+                }
             }
             steps {
-                script {
-                    CONTAINERS = sh (
-                        script: 'docker ps -a -q --filter ancestor=\$APP_NAME',
-                        returnStdout: true
-                    ).trim()
-                }
-
                 sh "docker stop $CONTAINERS"
                 sh "docker rm $CONTAINERS"
-                sh "docker rmi \$APP_NAME"
+
+            }
+        }
+        stage('clear old images') {
+            steps {
+                sh "docker rmi $APP_NAME"
             }
         }
         stage('run !') {
