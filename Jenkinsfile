@@ -8,11 +8,16 @@ pipeline {
             returnStdout: true
         ).trim()
     }
-    
+
     stages {
         stage('init') {
             steps {
                 echo "pipeline init ..."
+            }
+        }
+        stage('minify code') {
+            steps {
+                sh "docker run -v src:/src -v static:/static -v scripts:/scripts alpine:latest /scripts/minify.sh"
             }
         }
         stage('build docker image') {
