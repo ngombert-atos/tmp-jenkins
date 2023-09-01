@@ -13,7 +13,7 @@ pipeline {
             when { expression { return fileExists ('Dockerfile') } }
             steps {
                 echo "Dockerfile found, building image ..."
-                sh "docker build -t \$APP_NAME ."
+                sh "docker build -t \$APP_NAME:\$BRANCH_NAME-\$BUILD_NUMBER ."
             }
         }
         stage('clear docker containers') {
