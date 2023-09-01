@@ -17,7 +17,7 @@ pipeline {
         }
         stage('minify code') {
             steps {
-                sh "docker run -v src:/src -v static:/static -v scripts:/scripts alpine:latest sh /scripts/minify.sh"
+                sh "docker run -v $(pwd)/src:/src -v $(pwd)/static:/static -v $(pwd)/scripts:/scripts alpine:latest sh /scripts/minify.sh"
             }
         }
         stage('build docker image') {
